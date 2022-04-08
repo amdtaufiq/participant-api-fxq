@@ -67,7 +67,7 @@ func (p htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]b
 	pdfg.MarginRight.Set(2)
 	pdfg.MarginTop.Set(2)
 	pdfg.Dpi.Set(350)
-	pdfg.PageSize.Set(wkhtmltopdf.PageSizeA6)
+	pdfg.PageSize.Set(wkhtmltopdf.PageSizeA7)
 	pdfg.Orientation.Set(wkhtmltopdf.OrientationLandscape)
 
 	// magic

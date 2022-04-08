@@ -16,7 +16,8 @@ type IHtmlToPDFService interface {
 
 type htmlToPDFService struct{}
 
-const path = "./wkhtmltopdf"
+// const path = "./wkhtmltopdf"
+const path = "/app/bin/wkhtmltopdf"
 
 func HtmlToPDFService() *htmlToPDFService {
 	return &htmlToPDFService{}

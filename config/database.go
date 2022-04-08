@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"participant-api/app/entities"
 	"participant-api/routes"
 
 	"gorm.io/driver/postgres"
@@ -26,9 +27,9 @@ func Initialize(DbUser, DbPassword, DbPort, DbHost, DbName, environment string) 
 		fmt.Println("We are connected to the database")
 	}
 
-	// DB.AutoMigrate(
-	// 	&entities.Participant{},
-	// )
+	DB.AutoMigrate(
+		&entities.Participant{},
+	)
 
 	routes.InitializeRoutes(DB)
 }

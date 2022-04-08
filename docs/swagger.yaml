@@ -1,0 +1,214 @@
+definitions:
+  formatters.ParticipantFormatter:
+    properties:
+      business_name:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      is_print_certificate:
+        type: boolean
+      is_print_name_tag:
+        type: boolean
+      phone_number:
+        type: string
+    type: object
+  helper.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  helper.Response:
+    properties:
+      data: {}
+      meta:
+        $ref: '#/definitions/helper.Meta'
+    type: object
+  inputs.CreateParticipantInput:
+    properties:
+      business_name:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      phone_number:
+        type: string
+    required:
+    - business_name
+    - email
+    - full_name
+    - phone_number
+    type: object
+  inputs.UpdateParticipantInput:
+    properties:
+      business_name:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      phone_number:
+        type: string
+    required:
+    - business_name
+    - email
+    - full_name
+    - id
+    - phone_number
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+paths:
+  /api/v1/participant:
+    get:
+      description: Get a list of Participant.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/formatters.ParticipantFormatter'
+            type: array
+      summary: Get all Participant.
+      tags:
+      - Participant
+    post:
+      description: Creating a new Participant.
+      parameters:
+      - description: the body to create a new participant
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.CreateParticipantInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Create New Participant.
+      tags:
+      - Participant
+  /api/v1/participant/{id}:
+    delete:
+      description: Delete a participant by id.
+      parameters:
+      - description: participant id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Delete one Participant.
+      tags:
+      - Participant
+    get:
+      description: Get a Participant by id.
+      parameters:
+      - description: participant id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/formatters.ParticipantFormatter'
+      summary: Get Participant.
+      tags:
+      - Participant
+    put:
+      description: Update participant by id.
+      parameters:
+      - description: participant id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update an participant
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.UpdateParticipantInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Update Participant.
+      tags:
+      - Participant
+  /api/v1/participant/certificate/{id}:
+    get:
+      description: Print Name Tag a participant by id.
+      parameters:
+      - description: participant id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Print Certificate.
+      tags:
+      - Participant
+  /api/v1/participant/name-tag/{id}:
+    get:
+      description: Print Name Tag a participant by id.
+      parameters:
+      - description: participant id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Print Name Tag.
+      tags:
+      - Participant
+swagger: "2.0"

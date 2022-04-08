@@ -17,7 +17,7 @@ type IHtmlToPDFService interface {
 type htmlToPDFService struct{}
 
 // const path = "./wkhtmltopdf"
-const path = "/app/bin/wkhtmltopdf"
+// const path = "/app/bin/wkhtmltopdf"
 
 func HtmlToPDFService() *htmlToPDFService {
 	return &htmlToPDFService{}
@@ -45,7 +45,7 @@ func (p htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]b
 	}
 
 	//set path
-	wkhtmltopdf.SetPath(path)
+	// wkhtmltopdf.SetPath(path)
 
 	// initalize a wkhtmltopdf generator
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
@@ -101,7 +101,7 @@ func (p htmlToPDFService) GenerateCertificate(participant entities.Participant) 
 	}
 
 	//set path
-	wkhtmltopdf.SetPath(path)
+	// wkhtmltopdf.SetPath(path)
 
 	// initalize a wkhtmltopdf generator
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()

@@ -70,7 +70,6 @@ func (p htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]b
 	pdfg.PageSize.Set(wkhtmltopdf.PageSizeA7)
 	pdfg.Orientation.Set(wkhtmltopdf.OrientationLandscape)
 
-	// magic
 	err = pdfg.Create()
 	if err != nil {
 		return nil, err

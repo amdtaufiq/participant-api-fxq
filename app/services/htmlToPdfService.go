@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"html/template"
 	"participant-api/app/entities"
+	"participant-api/app/repositories"
 	"time"
 
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
@@ -14,16 +15,17 @@ type IHtmlToPDFService interface {
 	GenerateCertificate(data entities.Participant) ([]byte, error)
 }
 
-type htmlToPDFService struct{}
-
-// const path = "./wkhtmltopdf"
-// const path = "/app/bin/wkhtmltopdf"
-
-func HtmlToPDFService() *htmlToPDFService {
-	return &htmlToPDFService{}
+type htmlToPDFService struct {
+	participantRepository repositories.IParticipantRepository
 }
 
-func (p htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]byte, error) {
+// const path = "./wkhtmltopdf"
+
+func HtmlToPDFService(participantRepository repositories.IParticipantRepository) *htmlToPDFService {
+	return &htmlToPDFService{participantRepository}
+}
+
+func (s htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]byte, error) {
 	var templ *template.Template
 	var err error
 	currentTime := time.Now()
@@ -34,6 +36,13 @@ func (p htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]b
 		BusinessName: participant.BusinessName,
 		Date:         currentTime.Format("02 Jan, 2006"),
 	}
+
+	participant.IsPrintNameTag = true
+	_, err = s.participantRepository.Update(participant)
+	if err != nil {
+		return nil, err
+	}
+
 	// use Go's default HTML template generation tools to generate your HTML
 	if templ, err = template.ParseFiles("templates/name-tag.html"); err != nil {
 		return nil, err
@@ -78,7 +87,7 @@ func (p htmlToPDFService) GenerateNameTag(participant entities.Participant) ([]b
 	return pdfg.Bytes(), nil
 }
 
-func (p htmlToPDFService) GenerateCertificate(participant entities.Participant) ([]byte, error) {
+func (s htmlToPDFService) GenerateCertificate(participant entities.Participant) ([]byte, error) {
 	var templ *template.Template
 	var err error
 	currentTime := time.Now()
@@ -89,6 +98,13 @@ func (p htmlToPDFService) GenerateCertificate(participant entities.Participant) 
 		BusinessName: participant.BusinessName,
 		Date:         currentTime.Format("02 Jan, 2006"),
 	}
+
+	participant.IsPrintCertificate = true
+	_, err = s.participantRepository.Update(participant)
+	if err != nil {
+		return nil, err
+	}
+
 	// use Go's default HTML template generation tools to generate your HTML
 	if templ, err = template.ParseFiles("templates/certificate.html"); err != nil {
 		return nil, err

@@ -15,9 +15,9 @@ import (
 
 func InitializeRoutes(DB *gorm.DB) {
 
-	htmlToPdfService := services.HtmlToPDFService()
 	participantRepository := repositories.ParticipantRepository(DB)
 	participantService := services.ParticipantService(participantRepository)
+	htmlToPdfService := services.HtmlToPDFService(participantRepository)
 	participantController := controllers.ParticipantController(participantService, htmlToPdfService)
 
 	//gin config
